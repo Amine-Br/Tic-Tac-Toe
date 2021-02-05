@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Tic Tac Toe</string>
+    <string name="_5x5_tic_tac_toe">5x5 Tic Tac Toe</string>
+    <string name="_3x3_tic_tac_toe">3x3 Tic Tac Toe</string>
+    <string name="_4x4_tic_tac_toe">4x4 Tic Tac Toe</string>
+    <string name="app_logo">App Logo</string>
+    <string name="player1">Player 1</string>
+    <string name="player2">Player 2</string>
+</resources>
