@@ -67,6 +67,11 @@ public class Game3x3 extends AppCompatActivity {
                                 toast.show();
                                 finish();
                             }
+                            if (checkdraw()) {
+                                Toast toast = Toast.makeText(getApplicationContext(), "draw", Toast.LENGTH_SHORT);
+                                toast.show();
+                                finish();
+                            }
                             current_player = 2;
                             container.setEnabled(false);
                             break;
@@ -84,6 +89,11 @@ public class Game3x3 extends AppCompatActivity {
                             container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.obox, getTheme()));
                             if (checkwin()) {
                                 Toast toast = Toast.makeText(getApplicationContext(), "player " + current_player + " win!", Toast.LENGTH_SHORT);
+                                toast.show();
+                                finish();
+                            }
+                            if (checkdraw()) {
+                                Toast toast = Toast.makeText(getApplicationContext(), "draw", Toast.LENGTH_SHORT);
                                 toast.show();
                                 finish();
                             }
@@ -125,4 +135,16 @@ public class Game3x3 extends AppCompatActivity {
         }
         return false;
     }
+
+    private boolean checkdraw() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (boxes[i][j] != 1 && boxes[i][j] != 2) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
