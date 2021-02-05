@@ -43,6 +43,7 @@
     </LinearLayout>
 
     <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/activity_game3x3_gridlayout"
         android:layout_width="350dp"
         android:layout_height="350dp"
         app:columnCount="3"
