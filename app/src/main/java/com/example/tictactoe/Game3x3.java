@@ -26,12 +26,12 @@ public class Game3x3 extends AppCompatActivity {
 
     private void init() {
         boxes = new int[3][3];
-        remplirmatrice(boxes);
+        fill_matrix(boxes);
         gridLayout = findViewById(R.id.activity_game3x3_gridlayout);
         childCount = gridLayout.getChildCount();
     }
 
-    private void remplirmatrice(int[][] matrice) {
+    private void fill_matrix(int[][] matrice) {
         int val = 15;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -49,54 +49,16 @@ public class Game3x3 extends AppCompatActivity {
                 public void onClick(View view) {
                     switch (current_player) {
                         case 1:
-                            if (position < 3) {
-                                boxes[0][position] = current_player;
-                                Log.d("boxes", "boxes[" + 0 + "] [" + position + "]=" + current_player);
-                            } else {
-                                if (position < 6) {
-                                    boxes[1][position % 3] = current_player;
-                                    Log.d("boxes", "boxes[" + 1 + "] [" + position % 3 + "]=" + current_player);
-                                } else {
-                                    boxes[2][position % 6] = current_player;
-                                    Log.d("boxes", "boxes[" + 2 + "] [" + position % 6 + "]=" + current_player);
-                                }
-                            }
+                            play(position);
                             container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.xbox, getTheme()));
-                            if (checkwin()) {
-                                Toast toast = Toast.makeText(getApplicationContext(), "player " + current_player + " win!", Toast.LENGTH_SHORT);
-                                toast.show();
-                                finish();
-                            }
-                            if (checkdraw()) {
-                                Toast toast = Toast.makeText(getApplicationContext(), "draw", Toast.LENGTH_SHORT);
-                                toast.show();
-                                finish();
-                            }
+                            checkgame();
                             current_player = 2;
                             container.setEnabled(false);
                             break;
                         case 2:
-                            if (position < 3) {
-                                boxes[0][position] = current_player;
-                                Log.d("boxes", "boxes[" + 0 + "] [" + position + "]=" + current_player);
-                            } else if (position < 6) {
-                                boxes[1][position % 3] = current_player;
-                                Log.d("boxes", "boxes[" + 1 + "] [" + position % 3 + "]=" + current_player);
-                            } else {
-                                boxes[2][position % 6] = current_player;
-                                Log.d("boxes", "boxes[" + 2 + "] [" + position % 6 + "]=" + current_player);
-                            }
+                            play(position);
                             container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.obox, getTheme()));
-                            if (checkwin()) {
-                                Toast toast = Toast.makeText(getApplicationContext(), "player " + current_player + " win!", Toast.LENGTH_SHORT);
-                                toast.show();
-                                finish();
-                            }
-                            if (checkdraw()) {
-                                Toast toast = Toast.makeText(getApplicationContext(), "draw", Toast.LENGTH_SHORT);
-                                toast.show();
-                                finish();
-                            }
+                            checkgame();
                             current_player = 1;
                             container.setEnabled(false);
                             break;
@@ -108,7 +70,37 @@ public class Game3x3 extends AppCompatActivity {
         }
     }
 
+    private void play(int position) {
+        if (position < 3) {
+            boxes[0][position] = current_player;
+            Log.d("boxes", "boxes[" + 0 + "] [" + position + "]=" + current_player);
+        } else {
+            if (position < 6) {
+                boxes[1][position % 3] = current_player;
+                Log.d("boxes", "boxes[" + 1 + "] [" + position % 3 + "]=" + current_player);
+            } else {
+                boxes[2][position % 6] = current_player;
+                Log.d("boxes", "boxes[" + 2 + "] [" + position % 6 + "]=" + current_player);
+            }
+        }
+    }
+
+    private void checkgame() {
+        if (checkwin()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "player " + current_player + " win!", Toast.LENGTH_SHORT);
+            toast.show();
+            finish();
+        } else {
+            if (checkdraw()) {
+                Toast toast = Toast.makeText(getApplicationContext(), "draw", Toast.LENGTH_SHORT);
+                toast.show();
+                finish();
+            }
+        }
+    }
+
     private boolean checkwin() {
+        //vertical
         if (boxes[0][0] == boxes[1][0] && boxes[0][0] == boxes[2][0]) {
             return true;
         }
@@ -118,6 +110,7 @@ public class Game3x3 extends AppCompatActivity {
         if (boxes[0][2] == boxes[1][2] && boxes[0][2] == boxes[2][2]) {
             return true;
         }
+        //horizontal
         if (boxes[0][0] == boxes[0][1] && boxes[0][0] == boxes[0][2]) {
             return true;
         }
@@ -127,6 +120,7 @@ public class Game3x3 extends AppCompatActivity {
         if (boxes[2][0] == boxes[2][1] && boxes[2][0] == boxes[2][2]) {
             return true;
         }
+        //diagonal
         if (boxes[0][0] == boxes[1][1] && boxes[0][0] == boxes[2][2]) {
             return true;
         }
