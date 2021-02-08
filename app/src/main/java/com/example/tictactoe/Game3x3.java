@@ -49,14 +49,16 @@ public class Game3x3 extends AppCompatActivity {
                 public void onClick(View view) {
                     switch (current_player) {
                         case 1:
-                            play(position);
+                            boxes[position / 3][position % 3] = current_player;
+                            Log.d("boxes", "boxes[" + position / 3 + "] [" + position % 3 + "]=" + current_player);
                             container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.xbox, getTheme()));
                             checkgame();
                             current_player = 2;
                             container.setEnabled(false);
                             break;
                         case 2:
-                            play(position);
+                            boxes[position / 3][position % 3] = current_player;
+                            Log.d("boxes", "boxes[" + position / 3 + "] [" + position % 3 + "]=" + current_player);
                             container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.obox, getTheme()));
                             checkgame();
                             current_player = 1;
@@ -67,21 +69,6 @@ public class Game3x3 extends AppCompatActivity {
                     }
                 }
             });
-        }
-    }
-
-    private void play(int position) {
-        if (position < 3) {
-            boxes[0][position] = current_player;
-            Log.d("boxes", "boxes[" + 0 + "] [" + position + "]=" + current_player);
-        } else {
-            if (position < 6) {
-                boxes[1][position % 3] = current_player;
-                Log.d("boxes", "boxes[" + 1 + "] [" + position % 3 + "]=" + current_player);
-            } else {
-                boxes[2][position % 6] = current_player;
-                Log.d("boxes", "boxes[" + 2 + "] [" + position % 6 + "]=" + current_player);
-            }
         }
     }
 

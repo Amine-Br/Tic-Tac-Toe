@@ -48,14 +48,16 @@ public class Game4x4 extends AppCompatActivity {
                 public void onClick(View view) {
                     switch (current_player) {
                         case 1:
-                            play(position);
+                            boxes[position / 4][position % 4] = current_player;
+                            Log.d("boxes", "boxes[" + position / 4 + "] [" + position % 4 + "]=" + current_player);
                             container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.xbox, getTheme()));
                             checkgame();
                             current_player = 2;
                             container.setEnabled(false);
                             break;
                         case 2:
-                            play(position);
+                            boxes[position / 4][position % 4] = current_player;
+                            Log.d("boxes", "boxes[" + position / 4 + "] [" + position % 4 + "]=" + current_player);
                             container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.obox, getTheme()));
                             checkgame();
                             current_player = 1;
@@ -66,26 +68,6 @@ public class Game4x4 extends AppCompatActivity {
                     }
                 }
             });
-        }
-    }
-
-    private void play(int position) {
-        if (position < 4) {
-            boxes[0][position] = current_player;
-            Log.d("boxes", "boxes[" + 0 + "] [" + position + "]=" + current_player);
-        } else {
-            if (position < 8) {
-                boxes[1][position % 4] = current_player;
-                Log.d("boxes", "boxes[" + 1 + "] [" + position % 4 + "]=" + current_player);
-            } else {
-                if (position < 12) {
-                    boxes[2][position % 8] = current_player;
-                    Log.d("boxes", "boxes[" + 2 + "] [" + position % 8 + "]=" + current_player);
-                } else {
-                    boxes[3][position % 12] = current_player;
-                    Log.d("boxes", "boxes[" + 3 + "] [" + position % 12 + "]=" + current_player);
-                }
-            }
         }
     }
 
