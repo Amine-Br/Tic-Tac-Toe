@@ -122,8 +122,16 @@ public class Game5x5 extends AppCompatActivity {
     }
 
     private boolean canplay(int current_position, int lastposition) {
-        if (current_position == lastposition - 6 || current_position == lastposition - 5 || current_position == lastposition - 4 || current_position == lastposition - 1
-                || current_position == lastposition + 1 || current_position == lastposition + 4 || current_position == lastposition + 5 || current_position == lastposition + 6) {
+        if(current_position == lastposition + 1 || current_position == lastposition - 1){
+            if( (lastposition+1)%5==0 || (lastposition-1)%5 ==4){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (current_position == lastposition - 6 || current_position == lastposition - 5 || current_position == lastposition - 4 ||
+                current_position == lastposition + 4 || current_position == lastposition + 5 || current_position == lastposition + 6) {
             return false;
         } else return true;
     }
