@@ -11,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class Game5x5 extends AppCompatActivity {
-    private int current_player = 1, childCount;
+    private int current_player = 1, childCount, lastposition = -1;
     private int[][] boxes;
     private GridLayout gridLayout;
+    private boolean secondturn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +57,39 @@ public class Game5x5 extends AppCompatActivity {
                             container.setEnabled(false);
                             break;
                         case 2:
-                            boxes[position / 5][position % 5] = current_player;
-                            Log.d("boxes", "boxes[" + position / 5 + "] [" + position % 5 + "]=" + current_player);
-                            container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.obox, getTheme()));
-                            checkgame();
-                            current_player = 1;
-                            container.setEnabled(false);
+                            if (secondturn) {
+                                if (canplay(position, lastposition)) {
+
+                                    boxes[position / 5][position % 5] = current_player;
+                                    Log.d("boxes", "boxes[" + position / 5 + "] [" + position % 5 + "]=" + current_player);
+                                    container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.obox, getTheme()));
+                                    checkgame();
+                                    current_player = 1;
+                                    container.setEnabled(false);
+
+                                    lastposition = -1;
+                                    secondturn = false;
+                                } else {
+                                    if (nomoremoves(lastposition)) {
+                                        Toast toast = Toast.makeText(getApplicationContext(), "No more moves player 1 win!", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        finish();
+                                    } else {
+                                        Toast toast = Toast.makeText(getApplicationContext(), "You cannot play in this box", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                }
+                            } else {
+                                secondturn = true;
+                                lastposition = position;
+
+                                boxes[position / 5][position % 5] = current_player;
+                                Log.d("boxes", "boxes[" + position / 5 + "] [" + position % 5 + "]=" + current_player);
+                                container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.obox, getTheme()));
+                                checkgame();
+                                container.setEnabled(false);
+
+                            }
                             break;
                         default:
                             break;
@@ -69,6 +97,26 @@ public class Game5x5 extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private boolean nomoremoves(int lastposition) {
+        for (int i = 0; i < childCount; i++) {
+            if (i != lastposition - 6 && i != lastposition - 5 && i != lastposition - 4 && i != lastposition - 1
+                    && i != lastposition + 1 && i != lastposition + 4 && i != lastposition + 5 && i != lastposition + 6) {
+                ImageView container = (ImageView) gridLayout.getChildAt(i);
+                if (container.isEnabled()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean canplay(int current_position, int lastposition) {
+        if (current_position == lastposition - 6 || current_position == lastposition - 5 || current_position == lastposition - 4 || current_position == lastposition - 1
+                || current_position == lastposition + 1 || current_position == lastposition + 4 || current_position == lastposition + 5 || current_position == lastposition + 6) {
+            return false;
+        } else return true;
     }
 
     private void checkgame() {
