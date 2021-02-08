@@ -70,22 +70,33 @@ public class Game5x5 extends AppCompatActivity {
                                     lastposition = -1;
                                     secondturn = false;
                                 } else {
-                                        Toast toast = Toast.makeText(getApplicationContext(), "You cannot play in this box", Toast.LENGTH_SHORT);
-                                        toast.show();
+                                    Toast toast = Toast.makeText(getApplicationContext(), "You cannot play in this box", Toast.LENGTH_SHORT);
+                                    toast.show();
                                 }
                             } else {
                                 secondturn = true;
                                 lastposition = position;
-                                if (nomoremoves(lastposition)) {
-                                    Toast toast = Toast.makeText(getApplicationContext(), "No more moves player 1 win!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                    finish();
-                                }
                                 boxes[position / 5][position % 5] = current_player;
                                 Log.d("boxes", "boxes[" + position / 5 + "] [" + position % 5 + "]=" + current_player);
                                 container.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.obox, getTheme()));
-                                checkgame();
                                 container.setEnabled(false);
+                                if (checkwin()) {
+                                    Toast toast = Toast.makeText(getApplicationContext(), "player " + current_player + " win!", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                    finish();
+                                } else {
+                                    if (checkdraw()) {
+                                        Toast toast = Toast.makeText(getApplicationContext(), "player 1 win!", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        finish();
+                                    } else {
+                                        if (nomoremoves(lastposition)) {
+                                            Toast toast = Toast.makeText(getApplicationContext(), "No more moves player 1 win!", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                            finish();
+                                        }
+                                    }
+                                }
 
                             }
                             break;
