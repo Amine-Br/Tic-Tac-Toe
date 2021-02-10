@@ -122,18 +122,41 @@ public class Game5x5 extends AppCompatActivity {
     }
 
     private boolean canplay(int current_position, int lastposition) {
-        if(current_position == lastposition + 1 || current_position == lastposition - 1){
-            if( (lastposition+1)%5==0 || (lastposition-1)%5 ==4){
+        /* --4
+        *  --1
+        *  --6
+        * */
+
+        if(current_position == lastposition + 1 || current_position == lastposition + 6 || current_position == lastposition - 4){
+            if(current_position % 5 == 0){
                 return true;
-            }
-            else {
+            }else{
                 return false;
             }
         }
-        if (current_position == lastposition - 6 || current_position == lastposition - 5 || current_position == lastposition - 4 ||
-                current_position == lastposition + 4 || current_position == lastposition + 5 || current_position == lastposition + 6) {
+
+        /*  6--
+         *  1--
+         *  4--
+         * */
+
+        if(current_position == lastposition - 1 || current_position == lastposition - 6 || current_position == lastposition + 4){
+            if(current_position % 5 == 4){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        /*  -5-
+         *  ---
+         *  -5-
+         * */
+
+        if(current_position == lastposition + 5 ||current_position == lastposition - 5){
             return false;
-        } else return true;
+        }
+        return true;
     }
 
     private void checkgame() {
